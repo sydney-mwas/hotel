@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Luxury Hotel Booking</title>
+    <!-- Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(120deg, #f8fafc 0%, #e0eafc 100%);
+            min-height: 100vh;
+        }
+        nav {
+            background: #22223b;
+            box-shadow: 0 4px 16px rgba(34,34,59,0.08);
+            padding: 18px 0;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li {
+            margin: 0 40px;
+            position: relative;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: color 0.3s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 6px;
+        }
+        /* Unique colors for each menu item */
+        nav ul li:nth-child(1) a { color: #4fc3f7; }      /* Home - Blue */
+        nav ul li:nth-child(2) a { color: #81c784; }      /* About - Green */
+        nav ul li:nth-child(3) a { color: #ffb74d; }      /* Contact - Orange */
+        nav ul li:nth-child(4) a { color: #ba68c8; }      /* Resources - Purple */
+        nav ul li:nth-child(5) a { color: #e57373; }      /* Book Icon - Red */
+        /* Hover effects with unique colors */
+        nav ul li:nth-child(1) a:hover { color: #0288d1; background: #e3f2fd; transform: scale(1.08);}
+        nav ul li:nth-child(2) a:hover { color: #388e3c; background: #e8f5e9; transform: scale(1.08);}
+        nav ul li:nth-child(3) a:hover { color: #f57c00; background: #fff3e0; transform: scale(1.08);}
+        nav ul li:nth-child(4) a:hover { color: #6a1b9a; background: #f3e5f5; transform: scale(1.08);}
+        nav ul li:nth-child(5) a:hover { color: #c62828; background: #ffebee; transform: scale(1.08);}
+        /* Tooltip styling */
+        nav ul li a[title]:hover::after {
+            content: attr(title);
+            position: absolute;
+            left: 50%;
+            top: 110%;
+            transform: translateX(-50%);
+            background: #22223b;
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 4px;
+            white-space: nowrap;
+            font-size: 15px;
+            opacity: 0.95;
+            z-index: 10;
+            pointer-events: none;
+            box-shadow: 0 2px 8px rgba(34,34,59,0.12);
+        }
+        /* Hero section */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px 20px;
+            background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+        }
+        .hero h1 {
+            font-size: 3.2rem;
+            color: #22223b;
+            margin-bottom: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+        .hero p {
+            font-size: 1.4rem;
+            color: #4fc3f7;
+            margin-bottom: 32px;
+        }
+        .booking-form {
+            background: #fff;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 32px 24px 24px 24px;
+            border-radius: 12px;
+            box-shadow: 0 6px 32px rgba(34,34,59,0.10);
+        }
+        .booking-form h2 {
+            margin-top: 0;
+            color: #22223b;
+            font-size: 2rem;
+            margin-bottom: 18px;
+        }
+        .booking-form label {
+            display: block;
+            margin-bottom: 6px;
+            color: #22223b;
+            font-weight: 500;
+        }
+        .booking-form input, .booking-form select {
+            width: 100%;
+            padding: 10px 8px;
+            margin-bottom: 18px;
+            border: 1px solid #bdbdbd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        .booking-form button {
+            width: 100%;
+            padding: 12px;
+            background: #4fc3f7;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .booking-form button:hover {
+            background: #0288d1;
+        }
+        /* Hotel gallery */
+        .hotel-gallery {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+        .hotel-gallery img {
+            width: 180px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(34,34,59,0.10);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .hotel-gallery img:hover {
+            transform: scale(1.07);
+            box-shadow: 0 8px 32px rgba(34,34,59,0.18);
+        }
+        /* Highlights section */
+        .highlights {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin: 32px 0 24px 0;
+            flex-wrap: wrap;
+        }
+        .highlights div {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(34,34,59,0.08);
+            padding: 24px 18px;
+            width: 220px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .highlights div:hover {
+            transform: translateY(-8px) scale(1.04);
+            box-shadow: 0 8px 32px rgba(34,34,59,0.16);
+        }
+        .highlights i {
+            font-size: 2.2rem;
+            color: #4fc3f7;
+            margin-bottom: 10px;
+        }
+        .highlights h3 {
+            margin: 10px 0 8px 0;
+            font-size: 1.1rem;
+            color: #22223b;
+        }
+        .highlights p {
+            color: #666;
+            font-size: 0.98rem;
+        }
+        /* Testimonials section */
+        .testimonials {
+            max-width: 700px;
+            margin: 0 auto 32px auto;
+            text-align: center;
+        }
+        .testimonials h2 {
+            color: #ba68c8;
+            margin-bottom: 18px;
+            font-size: 1.5rem;
+        }
+        .testimonials blockquote {
+            background: #f3e5f5;
+            border-left: 5px solid #ba68c8;
+            margin: 0 auto 18px auto;
+            padding: 18px 24px 12px 24px;
+            border-radius: 8px;
+            font-style: italic;
+            color: #333;
+            max-width: 500px;
+            box-shadow: 0 2px 8px rgba(34,34,59,0.08);
+        }
+        .testimonials footer {
+            margin-top: 8px;
+            font-size: 0.98rem;
+            color: #6a1b9a;
+            font-style: normal;
+        }
+        /* About section */
+        .about-section {
+            background: #fff;
+            padding: 48px 0 32px 0;
+            margin-top: 40px;
+        }
+        .about-section h2 {
+            color: #81c784;
+            font-size: 2rem;
+            margin-bottom: 18px;
+        }
+        .about-section p {
+            font-size: 1.15rem;
+            color: #333;
+            margin-bottom: 18px;
+        }
+        .about-section img {
+            width: 320px;
+            max-width: 90%;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(34,34,59,0.10);
+        }
+        /* Contact section */
+        .contact-section {
+            background: #f8fafc;
+            padding: 48px 0 32px 0;
+            margin-top: 40px;
+        }
+        .contact-section h2 {
+            color: #ffb74d;
+            font-size: 2rem;
+            margin-bottom: 18px;
+        }
+        .contact-section p {
+            font-size: 1.12rem;
+            color: #333;
+            margin-bottom: 18px;
+        }
+        .contact-section i {
+            color: #4fc3f7;
+            font-size: 1.5rem;
+            margin-right: 12px;
+            vertical-align: middle;
+        }
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 24px;
+        }
+        .contact-info div {
+            min-width: 220px;
+            text-align: left;
+        }
+        .contact-info p {
+            margin: 8px 0 0 0;
+            color: #22223b;
+        }
+        .contact-form {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        .contact-form label {
+            color: #22223b;
+            font-weight: 500;
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            border-radius: 5px;
+            border: 1px solid #bdbdbd;
+        }
+        .contact-form button {
+            width: 100%;
+            padding: 10px;
+            background: #ffb74d;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .contact-form button:hover {
+            background: #c68900;
+            transform: scale(1.05);
+        }
+        /* Responsive */
+        @media (max-width: 700px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            nav ul li {
+                margin: 12px 0;
+            }
+            .hero h1 {
+                font-size: 2.1rem;
+            }
+            .booking-form {
+                padding: 18px 8px;
+            }
+        }
+        @media (max-width: 900px) {
+            .highlights {
+                flex-direction: column;
+                align-items: center;
+            }
+            .highlights div {
+                width: 90%;
+                margin-bottom: 18px;
+            }
+        }
+        footer a:hover {
+            transform: scale(1.18);
+            filter: brightness(1.2);
+            text-shadow: 0 2px 12px rgba(34,34,59,0.18);
+            transition: transform 0.2s, filter 0.2s, text-shadow 0.2s;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#home" title="Go to Home"><i class="fas fa-hotel"></i> Home</a></li>
+            <li><a href="#about" title="Learn more About us"><i class="fas fa-user-tie"></i> About</a></li>
+            <li><a href="#contact" title="Contact our team"><i class="fas fa-envelope-open-text"></i> Contact</a></li>
+            <li><a href="#resources" title="See our amenities"><i class="fas fa-swimming-pool"></i> Amenities</a></li>
+            <li><a href="#book" title="Book your stay now"><i class="fas fa-calendar-check"></i> Book</a></li>
+        </ul>
+    </nav>
+    <section class="hero" id="home">
+        <h1>Welcome to LuxuryStay Hotel</h1>
+        <p>Experience comfort, elegance, and world-class hospitality. Book your dream stay now!</p>
+        <div class="hotel-gallery">
+            <img src="images/hotel 1.jpg" alt="Hotel Lobby">
+            <img src="images/hotel 2.jpeg" alt="Luxury Room">
+            <img src="images/hotel 7.jpg" alt="Swimming Pool">
+        </div> 
+            <div>
+                <i class="fas fa-wifi"></i>
+                <h3>Free High-Speed Wi-Fi</h3>
+                <p>Stay connected everywhere in the hotel, from your room to the poolside.</p>
+            </div>
+            <div>
+                <i class="fas fa-utensils"></i>
+                <h3>Gourmet Restaurant</h3>
+                <p>Enjoy world-class cuisine and a complimentary breakfast every morning.</p>
+            </div>
+            <div>
+                <i class="fas fa-spa"></i>
+                <h3>Spa & Wellness</h3>
+                <p>Relax in our luxury spa, sauna, and fitness center, open 24/7 for guests.</p>
+            </div>
+            <div>
+                <i class="fas fa-parking"></i>
+                <h3>Free Parking</h3>
+                <p>Secure, on-site parking for all guests at no extra charge.</p>
+            </div>
+        </div>
+        <div class="testimonials">
+            <h2>What Our Guests Say</h2>
+            <blockquote>
+                <p>"The best hotel experience I've ever had! The staff were so friendly and the amenities were top-notch."</p>
+                <footer>- Sarah W.</footer>
+            </blockquote>
+            <blockquote>
+                <p>"Beautiful rooms, delicious food, and a perfect location. Highly recommended!"</p>
+                <footer>- James K.</footer>
+            </blockquote>
+        </div>
+        <div class="booking-form" id="book">
+            <h2>Book Your Room</h2>
+            <form>
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                <label for="checkin">Check-in Date</label>
+                <input type="date" id="checkin" name="checkin" required>
+                <label for="checkout">Check-out Date</label>
+                <input type="date" id="checkout" name="checkout" required>
+                <label for="room">Room Type</label>
+                <select id="room" name="room" required>
+                    <option value="">Select Room</option>
+                    <option value="single">One bedroom</option>
+                    <option value="double">Two Room</option>
+                    <option value="suite">Master Bedroom</option>
+                    <option value="suite">Suite</option>
+                </select>
+                <button type="submit"><i class="fas fa-bed"></i> Book Now</button>
+            </form>
+        </div>
+    </section>
+    <section class="about-section" id="about" style="background: #fff; padding: 48px 0 32px 0; margin-top: 40px;">
+        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <h2 style="color: #81c784; font-size: 2rem; margin-bottom: 18px;">
+                <i class="fas fa-user-tie"></i> About LuxuryStay Hotel
+            </h2>
+            <p style="font-size: 1.15rem; color: #333; margin-bottom: 18px;">
+                LuxuryStay Hotel is your home away from home, nestled in the heart of the city with breathtaking views and world-class amenities. 
+                Our mission is to provide every guest with a memorable, comfortable, and luxurious experience—whether you’re here for business, leisure, or a special occasion.
+            </p>
+            <p style="font-size: 1.08rem; color: #555;">
+                Established in 2022, we have been recognized for our exceptional hospitality, modern rooms, gourmet dining, and relaxing spa facilities. 
+                Our dedicated staff is available 24/7 to ensure your stay is seamless and unforgettable. 
+                Discover why so many guests return to LuxuryStay Hotel year after year!
+            </p>
+            <div style="margin-top: 24px;">
+                <img src="images/hotel 5.avif" 
+                     alt="About LuxuryStay Hotel" 
+                     style="width: 320px; max-width: 90%; border-radius: 12px; box-shadow: 0 4px 24px rgba(34,34,59,0.10);">
+            </div>
+        </div>
+    </section>
+    <section class="contact-section" id="contact" style="background: #f8fafc; padding: 48px 0 32px 0; margin-top: 40px;">
+        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <h2 style="color: #ffb74d; font-size: 2rem; margin-bottom: 18px;">
+                <i class="fas fa-envelope-open-text"></i> Contact Us
+            </h2>
+            <p style="font-size: 1.12rem; color: #333; margin-bottom: 18px;">
+                Have questions or need assistance? Our team is here to help you 24/7. Reach out to us using the details below or send us a message using the contact form.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 32px; margin-bottom: 24px;">
+                <div style="min-width: 220px;">
+                    <i class="fas fa-phone-alt" style="color:#4fc3f7; font-size:1.5rem;"></i>
+                    <p style="margin: 8px 0 0 0; color:#22223b;"><strong>Phone:</strong> 0726252401</p>
+                </div>
+                <div style="min-width: 220px;">
+                    <i class="fas fa-envelope" style="color:#81c784; font-size:1.5rem;"></i>
+                    <p style="margin: 8px 0 0 0; color:#22223b;"><strong>Email:</strong> reservations@luxurystay.com</p>
+                </div>
+                <div style="min-width: 220px;">
+                    <i class="fas fa-map-marker-alt" style="color:#ba68c8; font-size:1.5rem;"></i>
+                    <p style="margin: 8px 0 0 0; color:#22223b;"><strong>Address:</strong> Sydney , Australia</p>
+                </div>
+            </div>
+            <form style="max-width: 500px; margin: 0 auto; text-align: left;">
+                <label for="contact-name" style="color:#22223b; font-weight:500;">Your Name</label>
+                <input type="text" id="contact-name" name="contact-name" placeholder="Enter your name" required style="width:100%;padding:8px;margin-bottom:12px;border-radius:5px;border:1px solid #bdbdbd;">
+                <label for="contact-email" style="color:#22223b; font-weight:500;">Your Email</label>
+                <input type="email" id="contact-email" name="contact-email" placeholder="Enter your email" required style="width:100%;padding:8px;margin-bottom:12px;border-radius:5px;border:1px solid #bdbdbd;">
+                <label for="contact-message" style="color:#22223b; font-weight:500;">Message</label>
+                <textarea id="contact-message" name="contact-message" rows="4" placeholder="Type your message here..." required style="width:100%;padding:8px;margin-bottom:16px;border-radius:5px;border:1px solid #bdbdbd;"></textarea>
+                <button type="submit" style="width:100%;padding:10px;background:#ffb74d;color:#fff;border:none;border-radius:6px;font-size:1.1rem;font-weight:600;cursor:pointer;transition:background 0.3s;">
+                    <i class="fas fa-paper-plane"></i> Send Message
+            
+                </button>
+            </form>
+        </div>
+    </section>
+    <section class="amenities-section" id="resources" style="background: #fff; padding: 48px 0 32px 0; margin-top: 40px;">
+        <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+            <h2 style="color: #ba68c8; font-size: 2rem; margin-bottom: 18px;">
+                <i class="fas fa-swimming-pool"></i> Our Amenities
+            </h2>
+            <p style="font-size: 1.12rem; color: #333; margin-bottom: 28px;">
+                At LuxuryStay Hotel, we offer a wide range of amenities to make your stay as comfortable and enjoyable as possible.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 32px;">
+                <div style="background:#f8fafc; border-radius:10px; box-shadow:0 2px 12px rgba(34,34,59,0.08); padding:24px 18px; width:220px; margin-bottom:18px;">
+                    <img src="images/gym.jpg" alt="Fitness Center" style="width:100%;height:110px;object-fit:cover;border-radius:8px;">
+                    <i class="fas fa-dumbbell" style="color:#4fc3f7; font-size:2rem; margin-top:10px;"></i>
+                    <h3 style="margin:10px 0 8px 0; color:#22223b;">Fitness Center</h3>
+                    <p style="color:#666; font-size:0.98rem;">State-of-the-art gym open 24/7 for all guests.</p>
+                </div>
+                <div style="background:#f8fafc; border-radius:10px; box-shadow:0 2px 12px rgba(34,34,59,0.08); padding:24px 18px; width:220px; margin-bottom:18px;">
+                    <img src="images/pool.webp" alt="Infinity Pool" style="width:100%;height:110px;object-fit:cover;border-radius:8px;">
+                    <i class="fas fa-swimmer" style="color:#4fc3f7; font-size:2rem; margin-top:10px;"></i>
+                    <h3 style="margin:10px 0 8px 0; color:#22223b;">Infinity Pool</h3>
+                    <p style="color:#666; font-size:0.98rem;">Relax and unwind in our rooftop infinity pool with city views.</p>
+                </div>
+                <div style="background:#f8fafc; border-radius:10px; box-shadow:0 2px 12px rgba(34,34,59,0.08); padding:24px 18px; width:220px; margin-bottom:18px;">
+                    <img src="images/spa.jpg" alt="Luxury Spa" style="width:100%;height:110px;object-fit:cover;border-radius:8px;">
+                    <i class="fas fa-spa" style="color:#4fc3f7; font-size:2rem; margin-top:10px;"></i>
+                    <h3 style="margin:10px 0 8px 0; color:#22223b;">Luxury Spa</h3>
+                    <p style="color:#666; font-size:0.98rem;">Pamper yourself with massages, facials, and wellness treatments.</p>
+                </div>
+                <div style="background:#f8fafc; border-radius:10px; box-shadow:0 2px 12px rgba(34,34,59,0.08); padding:24px 18px; width:220px; margin-bottom:18px;">
+                    <img src="images/concierge.jpg" alt="24/7 Concierge" style="width:100%;height:110px;object-fit:cover;border-radius:8px;">
+                    <i class="fas fa-concierge-bell" style="color:#4fc3f7; font-size:2rem; margin-top:10px;"></i>
+                    <h3 style="margin:10px 0 8px 0; color:#22223b;">24/7 Concierge</h3>
+                    <p style="color:#666; font-size:0.98rem;">Our staff is always available to assist with your needs.</p>
+                </div>
+                <div style="background:#f8fafc; border-radius:10px; box-shadow:0 2px 12px rgba(34,34,59,0.08); padding:24px 18px; width:220px; margin-bottom:18px;">
+                    <img src="images/shuttle.jpg" alt="Airport Shuttle" style="width:100%;height:110px;object-fit:cover;border-radius:8px;">
+                    <i class="fas fa-car" style="color:#4fc3f7; font-size:2rem; margin-top:10px;"></i>
+                    <h3 style="margin:10px 0 8px 0; color:#22223b;">Airport Shuttle</h3>
+                    <p style="color:#666; font-size:0.98rem;">Complimentary airport transfers for all guests.</p>
+                </div>
+                <div style="background:#f8fafc; border-radius:10px; box-shadow:0 2px 12px rgba(34,34,59,0.08); padding:24px 18px; width:220px; margin-bottom:18px;">
+                    <img src="images/room service.jpg" alt="Room Service" style="width:100%;height:110px;object-fit:cover;border-radius:8px;">
+                    <i class="fas fa-mug-hot" style="color:#4fc3f7; font-size:2rem; margin-top:10px;"></i>
+                    <h3 style="margin:10px 0 8px 0; color:#22223b;">Room Service</h3>
+                    <p style="color:#666; font-size:0.98rem;">Enjoy delicious meals and drinks delivered to your room 24/7.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="food-section" id="food" style="background: #f8fafc; padding: 48px 0 32px 0; margin-top: 40px;">
+        <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+            <h2 style="color: #ffb74d; font-size: 2rem; margin-bottom: 18px;">
+                <i class="fas fa-utensils"></i> Our Food & Dining Options
+            </h2>
+            <p style="font-size: 1.12rem; color: #333; margin-bottom: 28px;">
+                Enjoy a variety of delicious meals and drinks during your stay at LuxuryStay Hotel.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 32px;">
+                <div style="background:#fff; border-radius:10px; box-shadow:0 2px 12px rgba(34,34,59,0.08); padding:24px 18px; width:220px; margin-bottom:18px;">
+                    <img src="images/food 1.jpg" alt="Continental Breakfast" style="width:100%;height:110px;object-fit:cover;border-radius:8px;">
+                    <i class="fas fa-bread-slice" style="color:#ffb74d; font-size:2rem; margin-top:10px;"></i>
+                    <h3 style="margin:10px 0 8px 0; color:#22223b;">Continental Breakfast</h3>
+                    <p style="color:#666; font-size:0.98rem;">Fresh pastries, fruits, cereals, eggs, and hot beverages every morning.</p>
+                </div>
+                <div style="background:#fff; border-radius:10px; box-shadow:0 2px 12px rgba(34,34,59,0.08); padding:24px 18px; width:220px; margin-bottom:18px;">
+                    <img src="images/food 2.jpg" alt="Lunch & Dinner" style="width:100%;height:110px;object-fit:cover;border-radius:8px;">
+                    <i class="fas fa-drumstick-bite" style="color:#ffb74d; font-size:2rem; margin-top:10px;"></i>
+                    <h3 style="margin:10px 0 8px 0; color:#22223b;">Lunch & Dinner</h3>
+                    <p style="color:#666; font-size:0.98rem;">A la carte menu with international and local cuisine, including vegetarian and vegan options.</p>
+                </div>
+                <div style="background:#fff; border-radius:10px; box-shadow:0 2px 12px rgba(34,34,59,0.08); padding:24px 18px; width:220px; margin-bottom:18px;">
+                    <img src="images/food 3.jpg" alt="Desserts & Treats" style="width:100%;height:110px;object-fit:cover;border-radius:8px;">
+                    <i class="fas fa-ice-cream" style="color:#ffb74d; font-size:2rem; margin-top:10px;"></i>
+                    <h3 style="margin:10px 0 8px 0; color:#22223b;">Desserts & Treats</h3>
+                    <p style="color:#666; font-size:0.98rem;">Homemade cakes, pastries, ice cream, and fresh fruit platters.</p>
+                </div>
+                <div style="background:#fff; border-radius:10px; box-shadow:0 2px 12px rgba(34,34,59,0.08); padding:24px 18px; width:220px; margin-bottom:18px;">
+                    <img src="images/beverages 1.webp" alt="Beverages & Bar" style="width:100%;height:110px;object-fit:cover;border-radius:8px;">
+                    <i class="fas fa-coffee" style="color:#ffb74d; font-size:2rem; margin-top:10px;"></i>
+                    <h3 style="margin:10px 0 8px 0; color:#22223b;">Beverages & Bar</h3>
+                    <p style="color:#666; font-size:0.98rem;">Wide selection of coffees, teas, fresh juices, cocktails, wines, and spirits.</p>
+                </div>
+                <div style="background:#fff; border-radius:10px; box-shadow:0 2px 12px rgba(34,34,59,0.08); padding:24px 18px; width:220px; margin-bottom:18px;">
+                    <img src="images/food 4.jpg" alt="Room Service" style="width:100%;height:110px;object-fit:cover;border-radius:8px;">
+                    <i class="fas fa-hamburger" style="color:#ffb74d; font-size:2rem; margin-top:10px;"></i>
+                    <h3 style="margin:10px 0 8px 0; color:#22223b;">Room Service</h3>
+                    <p style="color:#666; font-size:0.98rem;">Order from our menu and enjoy meals in the comfort of your room, 24/7.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer style="background:#22223b; padding:24px 0; text-align:center; margin-top:40px;">
+    <div style="margin-bottom:10px;">
+        <a href="https://facebook.com/" target="_blank" title="Facebook" style="color:#4fc3f7; margin:0 14px; font-size:2rem;">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://instagram.com/" target="_blank" title="Instagram" style="color:#e1306c; margin:0 14px; font-size:2rem;">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://youtube.com/" target="_blank" title="YouTube" style="color:#ff0000; margin:0 14px; font-size:2rem;">
+            <i class="fab fa-youtube"></i>
+        </a>
+        <a href="https://wa.me/" target="_blank" title="WhatsApp" style="color:#25d366; margin:0 14px; font-size:2rem;">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://twitter.com/" target="_blank" title="Twitter" style="color:#1da1f2; margin:0 14px; font-size:2rem;">
+            <i class="fab fa-twitter"></i>
+        </a>
+    </div>
+    <div style="color:#fff; font-size:1rem;">
+        &copy; 2025 LuxuryStay Hotel. All rights reserved.
+    </div>
+</footer>
+</body>
+</html>
