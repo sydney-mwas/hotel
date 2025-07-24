@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Shop - Premium Fashion Destination</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modern reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+        }
+        
+        /* Header styles */
+        header {
+            background: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo img {
+            height: 45px;
+            border-radius: 50%;
+        }
+        
+        .logo span {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #333;
+            letter-spacing: 1px;
+        }
+        
+        /* Navigation styles */
+        nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 10px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            color: #555;
+            background: rgba(245, 245, 245, 0.7);
+        }
+        
+        .nav-item:hover {
+            background: #f0f0f0;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            color: #222;
+        }
+        
+        .nav-item i {
+            font-size: 1.3rem;
+            margin-bottom: 0.4rem;
+        }
+        
+        .nav-item span {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ff6b6b, #ffa502);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-item:hover::after {
+            width: 60%;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: linear-gradient(135deg, #ff4757, #ff6b81);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(255, 71, 87, 0.3);
+        }
+        
+        /* Slideshow styles */
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 80vh;
+            overflow: hidden;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+        }
+        
+        .slide.active {
+            opacity: 1;
+        }
+        
+        .slide-content {
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            transform: translateY(-50%);
+            z-index: 2;
+            color: white;
+            text-align: left;
+            max-width: 500px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+            background: rgba(0,0,0,0.4);
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .slide-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .slide-content p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+        
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2.5rem;
+            color: white;
+            cursor: pointer;
+            z-index: 10;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.4);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-arrow:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .prev {
+            left: 30px;
+        }
+        
+        .next {
+            right: 30px;
+        }
+        
+        .dots-container {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            z-index: 10;
+        }
+        
+        .dot {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            margin: 0 8px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dot:hover {
+            transform: scale(1.2);
+        }
+        
+        .dot.active {
+            background-color: white;
+            transform: scale(1.2);
+        }
+        
+        /* Main content styles */
+        main {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #333;
+            display: inline-block;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #ff8e53);
+            border-radius: 2px;
+        }
+        
+        /* Featured Products */
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff4757;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 2;
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+        }
+        
+        .product-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .product-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .stars {
+            color: #ffc107;
+            margin-right: 0.5rem;
+        }
+        
+        .rating-count {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .product-location {
+            display: flex;
+            align-items: center;
+            color: #555;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .product-location i {
+            margin-right: 0.5rem;
+            color: #ff6b6b;
+        }
+        
+        .btn-add-to-cart {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(45deg, #4b6cb7, #182848);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-add-to-cart:hover {
+            background: linear-gradient(45deg, #182848, #4b6cb7);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(75, 108, 183, 0.3);
+        }
+        
+        /* About Section */
+        .about-section {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            margin: 5rem 0;
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            min-height: 400px;
+            background: url('about-image.jpg') center/cover;
+        }
+        
+        .about-content {
+            flex: 1;
+        }
+        
+        .about-content h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-content p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .feature-icon {
+            font-size: 1.5rem;
+            color: #ff6b6b;
+            margin-top: 0.3rem;
+        }
+        
+        .feature-text h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-text p {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+        
+        /* Testimonials */
+        .testimonials-section {
+            margin: 5rem 0;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1rem;
+            border: 3px solid #ff6b6b;
+        }
+        
+        .testimonial-author h3 {
+            color: #333;
+            margin-bottom: 0.3rem;
+        }
+        
+        .testimonial-author p {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .testimonial-text {
+            color: #555;
+            line-height: 1.7;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonial-rating {
+            color: #ffc107;
+        }
+        
+        /* Social Media Section */
+        .social-container {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            margin: 4rem 0;
+        }
+        
+        .social-container h2 {
+            font-size: 2.2rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-container p {
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+        
+        .social-media {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .facebook { background: #3b5998; }
+        .whatsapp { background: #25D366; }
+        .youtube { background: #FF0000; }
+        .x-twitter { background: #000000; }
+        .tiktok { background: #000000; }
+        
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 3rem 2rem;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+            margin: 4rem 0;
+        }
+        
+        .newsletter h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 50px 0 0 50px;
+            font-size: 1rem;
+        }
+        
+        .newsletter-btn {
+            padding: 0 1.5rem;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 0 50px 50px 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-btn:hover {
+            background: #ff4757;
+        }
+        
+        /* Footer styles */
+        footer {
+            background: #222;
+            color: #eee;
+            padding: 4rem 2rem 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: #ff6b6b;
+        }
+        
+        .footer-column p {
+            color: #bbb;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #ff6b6b;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #444;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .about-section {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .logo {
+                margin-bottom: 1rem;
+            }
+            
+            nav {
+                width: 100%;
+                justify-content: space-around;
+                gap: 0.5rem;
+            }
+            
+            .nav-item {
+                padding: 0.5rem;
+            }
+            
+            .nav-item i {
+                font-size: 1.1rem;
+            }
+            
+            .nav-item span {
+                font-size: 0.8rem;
+            }
+            
+            .slide-content {
+                left: 5%;
+                right: 5%;
+                max-width: 90%;
+            }
+            
+            .slide-content h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-input {
+                border-radius: 50px;
+                margin-bottom: 1rem;
+            }
+            
+            .newsletter-btn {
+                border-radius: 50px;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <img src="logo.jpg" alt="Modern Shop Logo">
+            <span>Modern Shop</span>
+        </div>
+        <nav>
+            <a href="index.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="about.html" class="nav-item">
+                <i class="fas fa-info-circle"></i>
+                <span>About</span>
+            </a>
+            <a href="contact.html" class="nav-item">
+                <i class="fas fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+            <a href="cart.html" class="nav-item" style="position: relative;">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Cart</span>
+                <span class="cart-count" id="cart-count">0</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- Slideshow -->
+    <div class="slideshow-container">
+        <!-- Background slides -->
+        <div class="slide active" style="background-image: url('luku.jpg');">
+            <div class="slide-content">
+                <h1>New Summer Collection</h1>
+                <p>Discover our latest arrivals for the season. Fresh styles for every occasion.</p>
+                <a href="shop.html" class="btn">Shop Now</a>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('outfit.jpg');">
+            <div class="slide-content">
+                <h1>Premium Quality</h1>
+                <p>Only the finest materials crafted for your comfort and style.</p>
+                <a href="shop.html" class="btn">Explore</a>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('shoes.jpg');">
+            <div class="slide-content">
+                <h1>Exclusive Deals</h1>
+                <p>Limited time offers on our most popular items.</p>
+                <a href="shop.html" class="btn">View Offers</a>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('lithood.webp');">
+            <div class="slide-content">
+                <h1>Trending Now</h1>
+                <p>Shop what's hot this season from top brands.</p>
+                <a href="shop.html" class="btn">See Trends</a>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('Air\ Jordan.webp');">
+            <div class="slide-content">
+                <h1>Stylish Accessories</h1>
+                <p>Complete your look with our curated selection.</p>
+                <a href="shop.html" class="btn">Accessorize</a>
+            </div>
+        </div>
+        
+        <!-- Navigation arrows -->
+        <div class="nav-arrow prev" onclick="prevSlide()">&#10094;</div>
+        <div class="nav-arrow next" onclick="nextSlide()">&#10095;</div>
+        
+        <!-- Dots indicator -->
+        <div class="dots-container">
+            <span class="dot active" onclick="goToSlide(0)"></span>
+            <span class="dot" onclick="goToSlide(1)"></span>
+            <span class="dot" onclick="goToSlide(2)"></span>
+            <span class="dot" onclick="goToSlide(3)"></span>
+            <span class="dot" onclick="goToSlide(4)"></span>
+        </div>
+    </div>
+
+    <main>
+        <!-- Featured Products -->
+        <section class="featured">
+            <div class="section-title">
+                <h2>Featured Products</h2>
+            </div>
+            <div class="product-list">
+                <div class="product-card">
+                    <span class="product-badge">New</span>
+                    <img src="hoods.jpg" alt="Premium Hoodie" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-title">Premium Cotton Hoodie</h3>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="rating-count">(128 reviews)</span>
+                        </div>
+                        <p class="product-description">Ultra-soft cotton hoodie with premium stitching and durable fabric. Perfect for casual outings or lounging at home.</p>
+                        <div class="product-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Available in stores: Nairobi, Isili </span>
+                        </div>
+                        <div class="product-price">ksh 250</div>
+                        <button class="btn-add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <span class="product-badge">Bestseller</span>
+                    <img src="sweatpant.webp" alt="Classic Sweatpants" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-title">Classic Jogger Sweatpants</h3>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-count">(256 reviews)</span>
+                        </div>
+                        <p class="product-description">Comfortable and stylish jogger sweatpants with adjustable waistband and secure pockets.</p>
+                        <div class="product-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Available in stores: Nairobi Roysambu </span>
+                        </div>
+                        <div class="product-price">Ksh 400</div>
+                        <button class="btn-add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="sweatpantlit.webp" alt="Lightweight Sweatpants" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-title">Lightweight Training Pants</h3>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="rating-count">(87 reviews)</span>
+                        </div>
+                        <p class="product-description">Breathable and flexible pants perfect for workouts or casual wear. Moisture-wicking fabric keeps you dry.</p>
+                        <div class="product-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Available in stores: Nairobi Zimmerman</span>
+                        </div>
+                        <div class="product-price"><ksh class="450"></ksh></div>
+                        <button class="btn-add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section class="about-section">
+            <div class="about-image"></div>
+            <div class="about-content">
+                <h2>About Modern Shop</h2>
+                <p>Founded in 2020, Modern Shop has quickly become a leading destination for contemporary fashion. We curate only the highest quality apparel that combines style, comfort, and durability.</p>
+                <p>Our mission is to provide exceptional value while maintaining ethical production standards. All our products are sourced from manufacturers who share our commitment to quality and sustainability.</p>
+                
+                <div class="about-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h3>Fast Shipping</h3>
+                            <p>Free delivery on orders over ksh 1000</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-undo"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h3>Easy Returns</h3>
+                            <p>30-day return policy</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h3>Secure Payment</h3>
+                            <p>100% secure checkout</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h3>24/7 Support</h3>
+                            <p>Dedicated customer service</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Testimonials -->
+        <section class="testimonials-section">
+            <div class="section-title">
+                <h2>What Our Customers Say</h2>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah J." class="testimonial-avatar">
+                        <div class="testimonial-author">
+                            <h3>Sarah J.</h3>
+                            <p>Nairobi Kasarani</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"The hoodie is incredibly soft and comfortable. I've washed it several times and it still looks brand new. Definitely worth the price!"</p>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael T." class="testimonial-avatar">
+                        <div class="testimonial-author">
+                            <h3>Michael T.</h3>
+                            <p>Nairobi Karen</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"I bought three pairs of the jogger sweatpants - they're that good! Perfect fit and the material is high quality. Will be buying more."</p>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emily R." class="testimonial-avatar">
+                        <div class="testimonial-author">
+                            <h3>Emily R.</h3>
+                            <p>Kahawa sukari</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"Great customer service when I had sizing questions. The lightweight pants are perfect for my morning runs. Highly recommend this store!"</p>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Social Media -->
+        <section class="social-container">
+            <h2>Connect With Us</h2>
+            <p>Follow us on social media for exclusive offers, styling tips, and behind-the-scenes content.</p>
+            <div class="social-media">
+                <a href="https://instagram.com/modernshop" target="_blank" class="social-icon instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://facebook.com/modernshop" target="_blank" class="social-icon facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://wa.me/1234567890" target="_blank" class="social-icon whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://youtube.com/modernshop" target="_blank" class="social-icon youtube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://twitter.com/modernshop" target="_blank" class="social-icon x-twitter">
+                    <i class="fab fa-x-twitter"></i>
+                </a>
+                <a href="https://tiktok.com/@modernshop" target="_blank" class="social-icon tiktok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Newsletter -->
+        <section class="newsletter">
+            <h2>Join Our Newsletter</h2>
+            <p>Subscribe to get 10% off your first order and be the first to know about new arrivals and exclusive deals.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address" class="newsletter-input" required>
+                <button type="submit" class="newsletter-btn">Subscribe</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Modern Shop</h3>
+                <p>Your premier destination for contemporary fashion and accessories. Quality products with exceptional customer service.</p>
+                <div class="social-media">
+                    <a href="#" class="social-icon instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon twitter"><i class="fab fa-x-twitter"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Customer Service</h3>
+                <ul class="footer-links">
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="shipping.html">Shipping Policy</a></li>
+                    <li><a href="returns.html">Return Policy</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Fashion Ave, Nairobi, Roysambu</p>
+                <p><i class="fas fa-phone"></i> 0726252401</p>
+                <p><i class="fas fa-envelope"></i> mwangisydney84@gmail.com.com</p>
+                <p><i class="fas fa-clock"></i> Mon-Fri: 9AM-6PM</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Modern Shop. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Slideshow functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        const totalSlides = slides.length;
+        
+        // Auto-advance slides every 5 seconds
+        let slideInterval = setInterval(nextSlide, 5000);
+        
+        function resetInterval() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+        
+        function showSlide(index) {
+            // Wrap around if index is out of bounds
+            if (index >= totalSlides) {
+                currentSlide = 0;
+            } else if (index < 0) {
+                currentSlide = totalSlides - 1;
+            } else {
+                currentSlide = index;
+            }
+            
+            // Update slides
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[currentSlide].classList.add('active');
+            
+            // Update dots
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[currentSlide].classList.add('active');
+            
+            // Reset auto-advance timer
+            resetInterval();
+        }
+        
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+        
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+        
+        function goToSlide(index) {
+            showSlide(index);
+        }
+        
+        // Pause on hover
+        const container = document.querySelector('.slideshow-container');
+        container.addEventListener('mouseenter', () => clearInterval(slideInterval));
+        container.addEventListener('mouseleave', resetInterval);
+        
+        // Cart functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize cart count
+            let cartCount = localStorage.getItem('cartCount') || 0;
+            document.getElementById('cart-count').textContent = cartCount;
+            
+            // Add to cart buttons
+            const addToCartButtons = document.querySelectorAll('.btn-add-to-cart');
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    cartCount++;
+                    document.getElementById('cart-count').textContent = cartCount;
+                    localStorage.setItem('cartCount', cartCount);
+                    
+                    // Animation effect
+                    this.textContent = 'Added!';
+                    this.style.backgroundColor = '#4CAF50';
+                    setTimeout(() => {
+                        this.textContent = 'Add to Cart';
+                        this.style.backgroundColor = '';
+                    }, 1000);
+                });
+            });
+            
+            // Newsletter form submission
+            const newsletterForm = document.querySelector('.newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const emailInput = this.querySelector('.newsletter-input');
+                    alert(`Thank you for subscribing with ${emailInput.value}! Check your email for confirmation.`);
+                    emailInput.value = '';
+                });
+            }
+        });
+    </script>
+</body>
+</html><meta name="viewport" content="width=device-width, initial-scale=1.0"><nav class="mobile-nav">
+    <div class="menu-toggle">☰ Menu</div>
+    <ul class="nav-list">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+</nav>
+
+<style>
+    .menu-toggle {
+        display: none;
+        padding: 10px;
+        background: #333;
+        color: white;
+        cursor: pointer;
+    }
+    
+    .nav-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+    }
+    
+    .nav-list li {
+        padding: 10px;
+    }
+    
+    .nav-list a {
+        color: #333;
+        text-decoration: none;
+    }
+    
+    @media (max-width: 600px) {
+        .menu-toggle {
+            display: block;
+        }
+        
+        .nav-list {
+            display: none;
+            flex-direction: column;
+        }
+        
+        .nav-list.active {
+            display: flex;
+        }
+    }
+</style>
+
+
+</html>

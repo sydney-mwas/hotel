@@ -1,0 +1,47 @@
+/* Basic responsive rules */
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Responsive images */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Media queries for different screen sizes */
+@media (max-width: 768px) {
+    /* Styles for tablets and smaller */
+    body {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Styles for mobile phones */
+    body {
+        font-size: 12px;
+    }
+    
+    /* Example: stack columns on mobile */
+    .column {
+        width: 100% !important;
+        float: none;
+    }
+}/* Basic responsive rules */
+@media (max-width: 768px) { /* Tablet styles */ }
+@media (max-width: 480px) { /* Mobile styles */ }
+
+/* Flexible grid system */
+.container { max-width: 1200px; }
+.column { width: 100%; }
+
+/* Responsive navigation */
+.menu-toggle { display: none; }
+@media (max-width: 600px) {
+    .menu-toggle { display: block; }
+    .nav-list { display: none; }
+}
